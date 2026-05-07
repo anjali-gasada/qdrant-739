@@ -52,15 +52,18 @@ sleep 20                       # let Raft converge
   -shard-number 6 -replication-factor 2 -write-consistency 1 \
   -batch 1024
 
-# Run a 30-second read-only burst
+# Check if indexing is done (optimizer should show 0 pending)
+curl -s http://localhost:6333/collections/smoketest | \
+  python3 -m json.tool | grep -E "status|optimizer"
+
+# Wait until status=green and optimizer_status=ok, then rerun
 ./bin/bench \
   -hosts localhost:6334,localhost:6434,localhost:6534 \
   -collection smoketest \
   -workload C -concurrency 10 -duration 30s \
   -run-label smoke
-
 # Inspect output
-cat results/smoke/C_c10_b1.json | jq '.summary | {qps, p99_us}'
+cat results/smoke/C_100r_c10_b1.json.json | jq '.summary | {qps, p99_us}'
 ```
 
 Expected: QPS in the low thousands, p99 under 50 ms. If you see errors mentioning "no leader" or "shard not ready", give the cluster another 10-15 seconds and retry.
