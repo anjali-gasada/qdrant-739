@@ -1,0 +1,417 @@
+anjali12@node2:~/qdrant-739/qdrant-bench$ cat results/chaos_kill_node2/summary.json | python3 -m json.tool
+ls results/chaos_kill_node2/
+{
+    "concurrency": 25,
+    "duration": "3m0s",
+    "final_leader": 7244277440943583,
+    "inject_after": "1m10s",
+    "mode": "kill",
+    "post_state": {
+        "http://localhost:6333": {
+            "result": {
+                "status": "enabled",
+                "peer_id": 7244277440943583,
+                "peers": {
+                    "1097875728971280": {
+                        "uri": "http://qdrant_node3:6335/"
+                    },
+                    "2744096323719454": {
+                        "uri": "http://qdrant_node2:6335/"
+                    },
+                    "7244277440943583": {
+                        "uri": "http://qdrant_node1:6335/"
+                    }
+                },
+                "raft_info": {
+                    "term": 4,
+                    "commit": 91,
+                    "pending_operations": 0,
+                    "leader": 7244277440943583,
+                    "role": "Leader",
+                    "is_voter": true
+                }
+            }
+        },
+        "http://localhost:6433": {
+            "result": {
+                "status": "enabled",
+                "peer_id": 2744096323719454,
+                "peers": {
+                    "1097875728971280": {
+                        "uri": "http://qdrant_node3:6335/"
+                    },
+                    "2744096323719454": {
+                        "uri": "http://qdrant_node2:6335/"
+                    },
+                    "7244277440943583": {
+                        "uri": "http://qdrant_node1:6335/"
+                    }
+                },
+                "raft_info": {
+                    "term": 4,
+                    "commit": 91,
+                    "pending_operations": 0,
+                    "leader": 7244277440943583,
+                    "role": "Follower",
+                    "is_voter": true
+                }
+            }
+        },
+        "http://localhost:6533": {
+            "result": {
+                "status": "enabled",
+                "peer_id": 1097875728971280,
+                "peers": {
+                    "1097875728971280": {
+                        "uri": "http://qdrant_node3:6335/"
+                    },
+                    "2744096323719454": {
+                        "uri": "http://qdrant_node2:6335/"
+                    },
+                    "7244277440943583": {
+                        "uri": "http://qdrant_node1:6335/"
+                    }
+                },
+                "raft_info": {
+                    "term": 4,
+                    "commit": 91,
+                    "pending_operations": 0,
+                    "leader": 7244277440943583,
+                    "role": "Follower",
+                    "is_voter": true
+                }
+            }
+        }
+    },
+    "pre_state": {
+        "http://localhost:6333": {
+            "result": {
+                "status": "enabled",
+                "peer_id": 7244277440943583,
+                "peers": {
+                    "1097875728971280": {
+                        "uri": "http://qdrant_node3:6335/"
+                    },
+                    "2744096323719454": {
+                        "uri": "http://qdrant_node2:6335/"
+                    },
+                    "7244277440943583": {
+                        "uri": "http://qdrant_node1:6335/"
+                    }
+                },
+                "raft_info": {
+                    "term": 4,
+                    "commit": 86,
+                    "pending_operations": 0,
+                    "leader": 7244277440943583,
+                    "role": "Leader",
+                    "is_voter": true
+                }
+            }
+        },
+        "http://localhost:6433": {
+            "result": {
+                "status": "enabled",
+                "peer_id": 2744096323719454,
+                "peers": {
+                    "1097875728971280": {
+                        "uri": "http://qdrant_node3:6335/"
+                    },
+                    "2744096323719454": {
+                        "uri": "http://qdrant_node2:6335/"
+                    },
+                    "7244277440943583": {
+                        "uri": "http://qdrant_node1:6335/"
+                    }
+                },
+                "raft_info": {
+                    "term": 4,
+                    "commit": 86,
+                    "pending_operations": 0,
+                    "leader": 7244277440943583,
+                    "role": "Follower",
+                    "is_voter": true
+                }
+            }
+        },
+        "http://localhost:6533": {
+            "result": {
+                "status": "enabled",
+                "peer_id": 1097875728971280,
+                "peers": {
+                    "1097875728971280": {
+                        "uri": "http://qdrant_node3:6335/"
+                    },
+                    "2744096323719454": {
+                        "uri": "http://qdrant_node2:6335/"
+                    },
+                    "7244277440943583": {
+                        "uri": "http://qdrant_node1:6335/"
+                    }
+                },
+                "raft_info": {
+                    "term": 4,
+                    "commit": 86,
+                    "pending_operations": 0,
+                    "leader": 7244277440943583,
+                    "role": "Follower",
+                    "is_voter": true
+                }
+            }
+        }
+    },
+    "recover_after": "2m10s",
+    "recovery_elapsed": "1.573136822s",
+    "recovery_ms": 1573.136,
+    "target": "qdrant_node2",
+    "target_rest": "http://localhost:6433",
+    "total_ops": 47491,
+    "workload": "A_50r_50u"
+}
+latency.json  leader_timeline.json  plots  summary.json
+
+
+####### node 2 summary #################
+=== results/20260507-154751/A_50r_50u_c10_b1.json ===
+=== results/20260507-154751/A_50r_50u_c15_b1.json ===
+=== results/20260507-154751/A_50r_50u_c1_b1.json ===
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 42.99978877643757,
+        "p99_ms": 27.823,
+=== results/20260507-154751/A_50r_50u_c25_b1.json ===
+=== results/20260507-154751/A_50r_50u_c30_b1.json ===
+=== results/20260507-154751/B_95r_5u_c10_b1.json ===
+=== results/20260507-154751/B_95r_5u_c15_b1.json ===
+=== results/20260507-154751/B_95r_5u_c1_b1.json ===
+=== results/20260507-154751/B_95r_5u_c25_b1.json ===
+=== results/20260507-154751/B_95r_5u_c30_b1.json ===
+=== results/20260507-154751/C_100r_c10_b1.json ===
+=== results/20260507-154751/C_100r_c15_b1.json ===
+=== results/20260507-154751/C_100r_c1_b1.json ===
+=== results/20260507-154751/C_100r_c25_b1.json ===
+=== results/20260507-154751/C_100r_c30_b1.json ===
+=== results/20260507-154751/D_95r_5w_c10_b1.json ===
+=== results/20260507-154751/D_95r_5w_c15_b1.json ===
+=== results/20260507-154751/D_95r_5w_c1_b1.json ===
+=== results/20260507-154751/D_95r_5w_c25_b1.json ===
+=== results/20260507-154751/D_95r_5w_c30_b1.json ===
+=== results/20260507-154751/E_95scan_5w_c10_b1.json ===
+=== results/20260507-154751/E_95scan_5w_c15_b1.json ===
+=== results/20260507-154751/E_95scan_5w_c1_b1.json ===
+=== results/20260507-154751/E_95scan_5w_c25_b1.json ===
+=== results/20260507-154751/E_95scan_5w_c30_b1.json ===
+=== results/20260507-154751/F_50r_50rmw_c10_b1.json ===
+=== results/20260507-154751/F_50r_50rmw_c15_b1.json ===
+=== results/20260507-154751/F_50r_50rmw_c1_b1.json ===
+=== results/20260507-154751/F_50r_50rmw_c25_b1.json ===
+=== results/20260507-154751/F_50r_50rmw_c30_b1.json ===
+latency.json  leader_timeline.json  plots  summary.json
+{
+    "concurrency": 25,
+    "duration": "3m0s",
+    "final_leader": 7244277440943583,
+    "inject_after": "1m10s",
+    "mode": "kill",
+    "post_state": {
+        "http://localhost:6333": {
+            "result": {
+                "status": "enabled",
+                "peer_id": 7244277440943583,
+                "peers": {
+                    "1097875728971280": {
+                        "uri": "http://qdrant_node3:6335/"
+                    },
+                    "2744096323719454": {
+                        "uri": "http://qdrant_node2:6335/"
+                    },
+                    "7244277440943583": {
+                        "uri": "http://qdrant_node1:6335/"
+                    }
+                },
+                "raft_info": {
+                    "term": 4,
+                    "commit": 91,
+                    "pending_operations": 0,
+                    "leader": 7244277440943583,
+                    "role": "Leader",
+                    "is_voter": true
+                }
+            }
+        },
+        "http://localhost:6433": {
+            "result": {
+                "status": "enabled",
+                "peer_id": 2744096323719454,
+                "peers": {
+                    "1097875728971280": {
+                        "uri": "http://qdrant_node3:6335/"
+                    },
+                    "2744096323719454": {
+                        "uri": "http://qdrant_node2:6335/"
+                    },
+                    "7244277440943583": {
+                        "uri": "http://qdrant_node1:6335/"
+                    }
+                },
+                "raft_info": {
+                    "term": 4,
+                    "commit": 91,
+                    "pending_operations": 0,
+                    "leader": 7244277440943583,
+                    "role": "Follower",
+                    "is_voter": true
+                }
+            }
+        },
+        "http://localhost:6533": {
+            "result": {
+                "status": "enabled",
+                "peer_id": 1097875728971280,
+                "peers": {
+                    "1097875728971280": {
+                        "uri": "http://qdrant_node3:6335/"
+                    },
+                    "2744096323719454": {
+                        "uri": "http://qdrant_node2:6335/"
+                    },
+                    "7244277440943583": {
+                        "uri": "http://qdrant_node1:6335/"
+                    }
+                },
+                "raft_info": {
+                    "term": 4,
+                    "commit": 91,
+                    "pending_operations": 0,
+                    "leader": 7244277440943583,
+                    "role": "Follower",
+                    "is_voter": true
+                }
+            }
+        }
+    },
+    "pre_state": {
+        "http://localhost:6333": {
+            "result": {
+                "status": "enabled",
+                "peer_id": 7244277440943583,
+                "peers": {
+                    "1097875728971280": {
+                        "uri": "http://qdrant_node3:6335/"
+                    },
+                    "2744096323719454": {
+                        "uri": "http://qdrant_node2:6335/"
+                    },
+                    "7244277440943583": {
+                        "uri": "http://qdrant_node1:6335/"
+                    }
+                },
+                "raft_info": {
+                    "term": 4,
+                    "commit": 86,
+                    "pending_operations": 0,
+                    "leader": 7244277440943583,
+                    "role": "Leader",
+                    "is_voter": true
+                }
+            }
+        },
+        "http://localhost:6433": {
+            "result": {
+                "status": "enabled",
+                "peer_id": 2744096323719454,
+                "peers": {
+                    "1097875728971280": {
+                        "uri": "http://qdrant_node3:6335/"
+                    },
+                    "2744096323719454": {
+                        "uri": "http://qdrant_node2:6335/"
+                    },
+                    "7244277440943583": {
+                        "uri": "http://qdrant_node1:6335/"
+                    }
+                },
+                "raft_info": {
+                    "term": 4,
+                    "commit": 86,
+                    "pending_operations": 0,
+                    "leader": 7244277440943583,
+                    "role": "Follower",
+                    "is_voter": true
+                }
+            }
+        },
+        "http://localhost:6533": {
+            "result": {
+                "status": "enabled",
+                "peer_id": 1097875728971280,
+                "peers": {
+                    "1097875728971280": {
+                        "uri": "http://qdrant_node3:6335/"
+                    },
+                    "2744096323719454": {
+                        "uri": "http://qdrant_node2:6335/"
+                    },
+                    "7244277440943583": {
+                        "uri": "http://qdrant_node1:6335/"
+                    }
+                },
+                "raft_info": {
+                    "term": 4,
+                    "commit": 86,
+                    "pending_operations": 0,
+                    "leader": 7244277440943583,
+                    "role": "Follower",
+                    "is_voter": true
+                }
+            }
+        }
+    },
+    "recover_after": "2m10s",
+    "recovery_elapsed": "1.573136822s",
+    "recovery_ms": 1573.136,
+    "target": "qdrant_node2",
+    "target_rest": "http://localhost:6433",
+    "total_ops": 47491,
+    "workload": "A_50r_50u"
+}
+[
+    {
+        "operation": "read",
+        "concurrency": 25,
+        "started_at": "2026-05-07T12:25:31.904818048-06:00",
+        "duration_sec": 201.614272971,
+        "total_count": 23892,
+        "error_count": 15,
+        "qps": 118.50351489468507,
+        "mean_ms": 56.19055399296836,
+        "p50_ms": 55.071,
+        "p90_ms": 74.687,
+        "p95_ms": 81.407,
+        "p99_ms": 95.231,
+        "p999_ms": 116.095,
+        "max_ms": 205.567,
+        "per_second": [
+            {
+                "second": 0,
+                "count": 349,
+                "errors": 0,
+                "p50_ms": 51.007,
+                "p95_ms": 76.799,
+                "p99_ms": 89.663
+            },
+            {
+                "second": 1,
+                "count": 356,
+                "errors": 0,
+                "p50_ms": 52.959,
+                "p95_ms": 76.031,
+                "p99_ms": 88.319
+            },
+            {
+                "second": 2,
+                "count": 350,
+                "errors": 0,
+                "p50_ms": 51.999,
+                "p95_ms": 78.847,
+                "p99_ms": 95.359

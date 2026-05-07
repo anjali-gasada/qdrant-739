@@ -1,0 +1,26 @@
+anjali12@node1:~/qdrant-739/qdrant-bench$ for label in pipeline_walack pipeline_indexack pipeline_singlenode; do
+  echo "=== $label ==="
+  cat results/$label/A_50r_50u_c25_b1.json | python3 -m json.tool | \
+    grep -E '"operation"|"qps"|"p99_ms"' | head -6
+done
+=== pipeline_walack ===
+        "operation": "read",
+        "qps": 155.73135997302333,
+        "p99_ms": 365.823,
+                "p99_ms": 424.447
+                "p99_ms": 403.455
+                "p99_ms": 366.591
+=== pipeline_indexack ===
+        "operation": "read",
+        "qps": 521.156862550851,
+        "p99_ms": 59.583,
+                "p99_ms": 58.527
+                "p99_ms": 64.095
+                "p99_ms": 59.039
+=== pipeline_singlenode ===
+        "operation": "read",
+        "qps": 567.3405246743254,
+        "p99_ms": 55.935,
+                "p99_ms": 54.623
+                "p99_ms": 61.055
+                "p99_ms": 50.751

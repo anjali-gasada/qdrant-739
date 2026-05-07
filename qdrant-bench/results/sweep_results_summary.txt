@@ -1,0 +1,230 @@
+anjali12@node0:~/qdrant-739/qdrant-bench$ # On node0
+for dir in results/n3_rf1_wcf1 results/n3_rf2_wcf1 results/n3_rf2_wcf2 results/n3_rf3_wcf1 results/n3_rf3_wcf2 results/n3_rf3_wcf3; do
+  echo "=== $dir ==="
+  for f in $dir/A_50r_50u_c1_b1.json $dir/A_50r_50u_c10_b1.json $dir/B_95r_5u_c1_b1.json $dir/C_100r_c1_b1.json; do
+    [ -f "$f" ] && echo "$f:" && cat "$f" | python3 -m json.tool | grep -E "operation|concurrency|qps|p99_ms" | head -8
+  done
+done
+=== results/n3_rf1_wcf1 ===
+results/n3_rf1_wcf1/A_50r_50u_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 215.29545804089898,
+        "p99_ms": 6.747,
+                "p99_ms": 4.005
+                "p99_ms": 10.191
+                "p99_ms": 3.813
+                "p99_ms": 4.191
+results/n3_rf1_wcf1/A_50r_50u_c10_b1.json:
+        "operation": "read",
+        "concurrency": 10,
+        "qps": 912.9473812734382,
+        "p99_ms": 14.575,
+                "p99_ms": 12.847
+                "p99_ms": 14.407
+                "p99_ms": 13.303
+                "p99_ms": 14.663
+results/n3_rf1_wcf1/B_95r_5u_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 252.14884099213853,
+        "p99_ms": 4.771,
+                "p99_ms": 4.623
+                "p99_ms": 4.639
+                "p99_ms": 4.739
+                "p99_ms": 4.727
+results/n3_rf1_wcf1/C_100r_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 259.07236337791494,
+        "p99_ms": 4.687,
+                "p99_ms": 4.555
+                "p99_ms": 4.539
+                "p99_ms": 4.723
+                "p99_ms": 4.455
+=== results/n3_rf2_wcf1 ===
+results/n3_rf2_wcf1/A_50r_50u_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 160.28806112008434,
+        "p99_ms": 7.795,
+                "p99_ms": 7.619
+                "p99_ms": 7.583
+                "p99_ms": 7.779
+                "p99_ms": 7.751
+results/n3_rf2_wcf1/A_50r_50u_c10_b1.json:
+        "operation": "read",
+        "concurrency": 10,
+        "qps": 513.3599036653724,
+        "p99_ms": 28.671,
+                "p99_ms": 29.439
+                "p99_ms": 28.063
+                "p99_ms": 27.791
+                "p99_ms": 26.831
+results/n3_rf2_wcf1/B_95r_5u_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 202.07577038765777,
+        "p99_ms": 7.775,
+                "p99_ms": 7.359
+                "p99_ms": 7.379
+                "p99_ms": 7.351
+                "p99_ms": 7.803
+results/n3_rf2_wcf1/C_100r_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 206.67306510544975,
+        "p99_ms": 7.651,
+                "p99_ms": 7.671
+                "p99_ms": 7.351
+                "p99_ms": 7.659
+                "p99_ms": 7.415
+=== results/n3_rf2_wcf2 ===
+results/n3_rf2_wcf2/A_50r_50u_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 164.1968840849898,
+        "p99_ms": 7.639,
+                "p99_ms": 7.131
+                "p99_ms": 7.971
+                "p99_ms": 8.035
+                "p99_ms": 9.295
+results/n3_rf2_wcf2/A_50r_50u_c10_b1.json:
+        "operation": "read",
+        "concurrency": 10,
+        "qps": 546.6471061526852,
+        "p99_ms": 27.471,
+                "p99_ms": 23.983
+                "p99_ms": 26.143
+                "p99_ms": 27.967
+                "p99_ms": 28.271
+results/n3_rf2_wcf2/B_95r_5u_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 207.0694766753073,
+        "p99_ms": 7.811,
+                "p99_ms": 7.911
+                "p99_ms": 7.811
+                "p99_ms": 7.783
+                "p99_ms": 7.515
+results/n3_rf2_wcf2/C_100r_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 209.05544725288644,
+        "p99_ms": 7.887,
+                "p99_ms": 7.595
+                "p99_ms": 7.507
+                "p99_ms": 7.987
+                "p99_ms": 7.951
+=== results/n3_rf3_wcf1 ===
+results/n3_rf3_wcf1/A_50r_50u_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 114.9848633121042,
+        "p99_ms": 10.911,
+                "p99_ms": 10.919
+                "p99_ms": 10.687
+                "p99_ms": 10.559
+                "p99_ms": 10.615
+results/n3_rf3_wcf1/A_50r_50u_c10_b1.json:
+        "operation": "read",
+        "concurrency": 10,
+        "qps": 362.6718919128955,
+        "p99_ms": 40.639,
+                "p99_ms": 39.327
+                "p99_ms": 39.647
+                "p99_ms": 41.119
+                "p99_ms": 41.247
+results/n3_rf3_wcf1/B_95r_5u_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 157.67839435453118,
+        "p99_ms": 9.367,
+                "p99_ms": 8.591
+                "p99_ms": 9.607
+                "p99_ms": 9.487
+                "p99_ms": 8.735
+results/n3_rf3_wcf1/C_100r_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 155.48277785682103,
+        "p99_ms": 9.687,
+                "p99_ms": 10.103
+                "p99_ms": 9.439
+                "p99_ms": 9.207
+                "p99_ms": 9.559
+=== results/n3_rf3_wcf2 ===
+results/n3_rf3_wcf2/A_50r_50u_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 162.3935712769758,
+        "p99_ms": 11.823,
+                "p99_ms": 15.487
+                "p99_ms": 7.915
+                "p99_ms": 5.563
+                "p99_ms": 9.391
+results/n3_rf3_wcf2/A_50r_50u_c10_b1.json:
+        "operation": "read",
+        "concurrency": 10,
+        "qps": 596.114851853602,
+        "p99_ms": 25.087,
+                "p99_ms": 21.727
+                "p99_ms": 23.679
+                "p99_ms": 23.631
+                "p99_ms": 23.199
+results/n3_rf3_wcf2/B_95r_5u_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 213.64761967124903,
+        "p99_ms": 6.111,
+                "p99_ms": 5.675
+                "p99_ms": 6.203
+                "p99_ms": 6.079
+                "p99_ms": 5.959
+results/n3_rf3_wcf2/C_100r_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 217.7631455039391,
+        "p99_ms": 6.095,
+                "p99_ms": 6.155
+                "p99_ms": 6.119
+                "p99_ms": 6.011
+                "p99_ms": 5.895
+=== results/n3_rf3_wcf3 ===
+results/n3_rf3_wcf3/A_50r_50u_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 158.8902864965595,
+        "p99_ms": 11.199,
+                "p99_ms": 14.023
+                "p99_ms": 7.419
+                "p99_ms": 8.591
+                "p99_ms": 7.583
+results/n3_rf3_wcf3/A_50r_50u_c10_b1.json:
+        "operation": "read",
+        "concurrency": 10,
+        "qps": 630.230025623278,
+        "p99_ms": 25.583,
+                "p99_ms": 21.183
+                "p99_ms": 21.807
+                "p99_ms": 23.663
+                "p99_ms": 23.119
+results/n3_rf3_wcf3/B_95r_5u_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 213.86450441631368,
+        "p99_ms": 6.311,
+                "p99_ms": 6.343
+                "p99_ms": 5.915
+                "p99_ms": 6.583
+                "p99_ms": 5.999
+results/n3_rf3_wcf3/C_100r_c1_b1.json:
+        "operation": "read",
+        "concurrency": 1,
+        "qps": 226.2603745907032,
+        "p99_ms": 6.019,
+                "p99_ms": 6.075
+                "p99_ms": 6.019
+                "p99_ms": 5.827
+                "p99_ms": 6.087
+anjali12@node0:~/qdrant-739/qdrant-bench$ 
