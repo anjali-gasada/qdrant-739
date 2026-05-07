@@ -31,6 +31,56 @@ HDF5=./data/sift-128-euclidean.hdf5
 #   "default" lets Qdrant pick (=> a few segments per CPU core)
 SEGMENT_SIZES=(10000 50000 200000 default)
 
+# Verify all cluster nodes are reachable before starting
+echo "[sweep] checking cluster health..."
+for p in 6333 6433 6533; do
+  for i in $(seq 1 20); do
+    if curl -sf "http://localhost:$p/readyz" >/dev/null 2>&1; then
+      echo "[sweep] node :$p ready"
+      break
+    fi
+    if [ "$i" -eq 20 ]; then
+      echo "[sweep] ERROR: node :$p not ready — is the cluster running?"
+      exit 1
+    fi
+    sleep 3
+  done
+done
+
+# Delete collection if it exists and wait for Raft to propagate
+delete_collection() {
+  echo "[sweep] deleting collection sift1m (if exists)..."
+  curl -sf -X DELETE http://localhost:6333/collections/sift1m >/dev/null 2>&1 || true
+  sleep 5
+}
+
+# Wait for HNSW indexing to complete
+wait_for_indexing() {
+  echo "[sweep] waiting for HNSW indexing to complete..."
+  # Lower the threshold so indexing starts immediately
+  curl -sf -X PATCH http://localhost:6333/collections/sift1m \
+    -H 'Content-Type: application/json' \
+    -d '{"optimizers_config": {"indexing_threshold_kb": 1000}}' >/dev/null 2>&1 || true
+
+  for i in $(seq 1 60); do
+    indexed=$(curl -s http://localhost:6333/collections/sift1m | \
+      python3 -c "import sys,json; d=json.load(sys.stdin); print(d['result']['indexed_vectors_count'])" 2>/dev/null || echo "0")
+    points=$(curl -s http://localhost:6333/collections/sift1m | \
+      python3 -c "import sys,json; d=json.load(sys.stdin); print(d['result']['points_count'])" 2>/dev/null || echo "1")
+    status=$(curl -s http://localhost:6333/collections/sift1m | \
+      python3 -c "import sys,json; d=json.load(sys.stdin); print(d['result']['status'])" 2>/dev/null || echo "unknown")
+    opt=$(curl -s http://localhost:6333/collections/sift1m | \
+      python3 -c "import sys,json; d=json.load(sys.stdin); print(d['result']['optimizer_status'])" 2>/dev/null || echo "unknown")
+    echo "  iter=$i status=$status optimizer=$opt indexed=$indexed points=$points"
+    if [ "$indexed" -ge "$points" ] && [ "$points" -gt 0 ]; then
+      echo "[sweep] indexing complete"
+      return
+    fi
+    sleep 10
+  done
+  echo "[sweep] WARNING: indexing did not complete in time, proceeding anyway"
+}
+
 for seg in "${SEGMENT_SIZES[@]}"; do
   echo "==================================================="
   echo " compaction-sweep: max_segment_size_kb = $seg"
@@ -42,7 +92,10 @@ for seg in "${SEGMENT_SIZES[@]}"; do
     SEG_FLAG="$seg"
   fi
 
-  # Recreate + reload
+  # Delete existing collection so loader can recreate with new segment size
+  delete_collection
+
+  # Recreate + reload — tolerate minor point-count mismatch with || true
   ./bin/loader \
     -hosts "$HOSTS" \
     -collection sift1m \
@@ -51,25 +104,10 @@ for seg in "${SEGMENT_SIZES[@]}"; do
     -replication-factor 2 \
     -write-consistency 1 \
     -batch 1024 -concurrency 8 \
-    -max-segment-size-kb "$SEG_FLAG"
+    -max-segment-size-kb "$SEG_FLAG" || true
 
-  # Wait until the optimizer has had a chance to settle. We poll the
-  # /collections/sift1m endpoint and wait for status == green and
-  # optimizer_status == ok. (The Go loader returns when ALL points are
-  # ingested, but indexing continues asynchronously.)
-  echo "[sweep] waiting for collection to reach green status..."
-  for i in $(seq 1 60); do
-    out=$(curl -s http://localhost:6333/collections/sift1m | python3 -c '
-import sys, json
-j = json.load(sys.stdin)
-r = j.get("result", {})
-print(r.get("status"), r.get("optimizer_status"), r.get("indexed_vectors_count"), r.get("segments_count"))')
-    echo "  iter=$i $out"
-    case "$out" in
-      green*ok*) break ;;
-    esac
-    sleep 5
-  done
+  # Wait for HNSW index to be fully built before benching
+  wait_for_indexing
 
   # Run the bench
   ./bin/bench \

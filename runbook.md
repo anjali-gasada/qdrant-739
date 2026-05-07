@@ -16,7 +16,7 @@ This runbook gives an exact, copy-pasteable sequence to reproduce every experime
 # 2. On Linux, set CGO flags so Go can find the HDF5 headers:
 export CGO_CFLAGS="-I/usr/include/hdf5/serial"
 export CGO_LDFLAGS="-L/usr/lib/x86_64-linux-gnu/hdf5/serial -lhdf5"
-# Add these to ~/.bashrc to make them permanent.
+source ~/.bashrc
 
 # On macOS set instead:
 # export HDF5_DIR=$(brew --prefix hdf5)
@@ -28,6 +28,33 @@ cd qdrant-bench
 
 # 4. Download the SIFT-1M dataset (≈ 500 MB)
 make data
+
+
+# install go
+# Download and install Go 1.22
+curl -OL https://go.dev/dl/go1.22.4.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.22.4.linux-amd64.tar.gz
+
+# Add to PATH
+echo 'export PATH="$PATH:/usr/local/go/bin"' >> ~/.bashrc
+source ~/.bashrc
+
+go mod tidy
+
+# Verify
+go version
+
+
+# Need to install the HDF5 development headers on Linux:
+sudo apt update
+sudo apt install libhdf5-dev -y
+
+# docker install
+sudo apt update
+sudo apt install docker-compose-v2
+docker compose version
+sudo usermod -aG docker $USER
+newgrp docker
 
 # 5. Build the Go binaries
 make build
@@ -166,7 +193,7 @@ make load
 
 Partition is implemented by `iptables` dropping packets on the Raft port (6335) for the target container, then flushing the rules at recovery. The cluster sees the node as unreachable for Raft but still up for everything else, which is closer to a real network failure than a SIGKILL.
 
-## 6. Experiment E — segment size sweep (≈ 45 minutes)
+## 6. Experiment E — segment size sweep (≈ 45 minutes) -- doing
 
 **Research question:** how does forcing more frequent compaction (smaller segments) affect read latency?
 
