@@ -1,0 +1,24 @@
+ echo "=== seg=$seg ==="
+  cat results/compaction_seg_$seg/B_95r_5u_c25_b1.json | python3 -m json.tool | \
+    grep -E '"operation"|"qps"|"p99_ms"' | head -4
+done
+=== seg=10000 ===
+        "operation": "read",
+        "qps": 137.29511064880782,
+        "p99_ms": 249.599,
+                "p99_ms": 229.631
+=== seg=50000 ===
+        "operation": "read",
+        "qps": 559.4850773953661,
+        "p99_ms": 84.479,
+                "p99_ms": 89.599
+=== seg=200000 ===
+        "operation": "read",
+        "qps": 440.27327184163084,
+        "p99_ms": 97.407,
+                "p99_ms": 89.279
+=== seg=default ===
+        "operation": "read",
+        "qps": 736.6034018266695,
+        "p99_ms": 71.871,
+                "p99_ms": 70.271
