@@ -9,15 +9,27 @@ This runbook gives an exact, copy-pasteable sequence to reproduce every experime
 #    - Docker 24+ with Compose v2
 #    - Go 1.22+
 #    - Python 3.10+ with matplotlib, numpy
-#    - HDF5 dev headers (brew install hdf5 on macOS)
+#    - HDF5 dev headers:
+#        macOS:  brew install hdf5
+#        Linux:  sudo apt install libhdf5-dev
 
-# 2. Clone / cd into the project
+# 2. On Linux, set CGO flags so Go can find the HDF5 headers:
+export CGO_CFLAGS="-I/usr/include/hdf5/serial"
+export CGO_LDFLAGS="-L/usr/lib/x86_64-linux-gnu/hdf5/serial -lhdf5"
+# Add these to ~/.bashrc to make them permanent.
+
+# On macOS set instead:
+# export HDF5_DIR=$(brew --prefix hdf5)
+# export CGO_CFLAGS="-I${HDF5_DIR}/include"
+# export CGO_LDFLAGS="-L${HDF5_DIR}/lib"
+
+# 3. cd into the project
 cd qdrant-bench
 
-# 3. Download the SIFT-1M dataset (≈ 500 MB)
+# 4. Download the SIFT-1M dataset (≈ 500 MB)
 make data
 
-# 4. Build the Go binaries
+# 5. Build the Go binaries
 make build
 
 # Sanity check — binaries exist
@@ -35,14 +47,14 @@ sleep 20                       # let Raft converge
 
 # Load a small slice (100k vectors, ≈ 1 minute)
 ./bin/loader \
-  -hosts localhost:6334,localhost:6344,localhost:6354 \
+  -hosts localhost:6334,localhost:6434,localhost:6534 \
   -collection smoketest \
   -shard-number 6 -replication-factor 2 -write-consistency 1 \
   -batch 1024
 
 # Run a 30-second read-only burst
 ./bin/bench \
-  -hosts localhost:6334,localhost:6344,localhost:6354 \
+  -hosts localhost:6334,localhost:6434,localhost:6534 \
   -collection smoketest \
   -workload C -concurrency 10 -duration 30s \
   -run-label smoke
@@ -69,7 +81,7 @@ sleep 25
 make load              # 1M vectors, 6 shards, RF=2, WCF=1, batch=1024
 
 # Sweep concurrency = {1, 10, 15, 25, 30} for workloads A–F.
-make bench-full        # ≈ 60 min wall-clock for 6 workloads x 5 concurrency levels x 60s each
+make bench             # ≈ 60 min wall-clock for 6 workloads x 5 concurrency levels x 30s each
 
 # Generate plots
 make report
@@ -113,12 +125,12 @@ make load
 
 # Kill node-2 70 seconds in, restart it 60 seconds later.
 ./bin/chaos \
-  -hosts localhost:6334,localhost:6344,localhost:6354 \
-  -rest-urls http://localhost:6333,http://localhost:6343,http://localhost:6353 \
-  -containers qdrant-node-1,qdrant-node-2,qdrant-node-3 \
-  -collection bench \
+  -hosts localhost:6334,localhost:6434,localhost:6534 \
+  -rest-urls http://localhost:6333,http://localhost:6433,http://localhost:6533 \
+  -containers qdrant_node1,qdrant_node2,qdrant_node3 \
+  -collection sift1m \
   -workload A -concurrency 25 -duration 180s \
-  -mode kill -kill-target qdrant-node-2 \
+  -mode kill -kill-target qdrant_node2 \
   -inject-after 70s -recover-after 130s \
   -out-dir results/chaos_kill_node2
 
@@ -139,12 +151,12 @@ sleep 25
 make load
 
 ./bin/chaos \
-  -hosts localhost:6334,localhost:6344,localhost:6354 \
-  -rest-urls http://localhost:6333,http://localhost:6343,http://localhost:6353 \
-  -containers qdrant-node-1,qdrant-node-2,qdrant-node-3 \
-  -collection bench \
+  -hosts localhost:6334,localhost:6434,localhost:6534 \
+  -rest-urls http://localhost:6333,http://localhost:6433,http://localhost:6533 \
+  -containers qdrant_node1,qdrant_node2,qdrant_node3 \
+  -collection sift1m \
   -workload A -concurrency 25 -duration 180s \
-  -mode partition -kill-target qdrant-node-2 \
+  -mode partition -kill-target qdrant_node2 \
   -inject-after 70s -recover-after 130s \
   -out-dir results/chaos_partition_node2
 ```
@@ -179,17 +191,17 @@ make cluster-up-3
 sleep 25
 make load
 
-# A1: WAL-acked writes
+# A1: WAL-acked writes (default — omit -wait flag)
 ./bin/bench \
-  -hosts localhost:6334,localhost:6344,localhost:6354 \
-  -collection bench \
+  -hosts localhost:6334,localhost:6434,localhost:6534 \
+  -collection sift1m \
   -workload A -concurrency 25 -duration 60s \
   -run-label pipeline_walack
 
 # A2: index-acked writes
 ./bin/bench \
-  -hosts localhost:6334,localhost:6344,localhost:6354 \
-  -collection bench \
+  -hosts localhost:6334,localhost:6434,localhost:6534 \
+  -collection sift1m \
   -workload A -concurrency 25 -duration 60s \
   -wait \
   -run-label pipeline_indexack
@@ -209,20 +221,44 @@ for B in 64 256 512 1024 2048 4096; do
     make cluster-up-3
     sleep 20
     ./bin/loader \
-      -hosts localhost:6334,localhost:6344,localhost:6354 \
-      -collection bench \
+      -hosts localhost:6334,localhost:6434,localhost:6534 \
+      -collection sift1m \
       -shard-number 6 -replication-factor 2 -write-consistency 1 \
       -batch $B -concurrency 8
     ./bin/bench \
-      -hosts localhost:6334,localhost:6344,localhost:6354 \
-      -collection bench -workload A -concurrency 25 \
+      -hosts localhost:6334,localhost:6434,localhost:6534 \
+      -collection sift1m -workload A -concurrency 25 \
       -duration 60s -run-label batch_b$B
 done
 ```
 
 Plot QPS-per-vector vs batch size. The curve usually flattens around 1024-2048 because past that point the bottleneck moves from request overhead to indexing CPU.
 
-## 9. Final report assembly
+## 9. Experiment H — 5-node cluster comparison (≈ 90 minutes)
+
+**Research question:** how does scaling from 3 to 5 nodes affect throughput, tail latency, and fault tolerance?
+
+```bash
+make cluster-down
+make cluster-up-5
+sleep 30
+
+# Load with 10 shards across 5 nodes
+make load-5            # 1M vectors, 10 shards, RF=2, WCF=1
+
+# Run the same workload sweep as Experiment A for direct comparison
+make bench-5           # results land in results/5node/
+
+# Chaos on 5-node cluster — kill the middle node
+make chaos-kill-5      # results land in results/chaos_kill_5node/
+
+# Generate comparison plots
+make report
+```
+
+Expected: higher aggregate QPS due to more shards, similar or slightly lower per-node p99 due to reduced hot-spot pressure on any single node.
+
+## 10. Final report assembly
 
 ```bash
 # Generate the full plot set
@@ -239,15 +275,36 @@ make report
 
 **"shard not ready" errors during loading** — your `replication_factor` is greater than the number of running nodes. Either reduce RF or wait for all nodes to come up before loading.
 
-**Memory pressure** — 1M × 128-d float32 vectors plus HNSW graphs takes ~3 GB resident per replica. Each of the 3 containers has `mem_limit: 6g` in the compose file; adjust if your host is tight.
+**"connection refused" on 6434 or 6534** — check that the correct cluster is running with `docker ps | grep qdrant`. If the containers show no host port bindings, another container is holding the port. Run `make cluster-down` to clear everything, then bring the cluster back up.
+
+**Memory pressure** — 1M × 128-d float32 vectors plus HNSW graphs takes ~3 GB resident per replica. Each container has `mem_limit: 6g` in the compose file; adjust if your host is tight.
 
 **Recall drops below 0.9** — usually means HNSW `ef` (search-time) is too low. Try `-ef 128` on the bench command. Loader sets `ef_construct=100` and `m=16` by default which is the standard ANN-Benchmarks recipe.
 
 **Container can't run iptables for partitioning** — the compose file sets `cap_add: NET_ADMIN` on every node. If you're running on a hardened Docker setup that blocks capabilities, partition tests will silently no-op. Use kill-mode chaos instead.
 
-**HDF5 headers not found on macOS** — run `brew install hdf5` then set:
+**HDF5 headers not found on Linux** — run:
 ```bash
+sudo apt install libhdf5-dev
+export CGO_CFLAGS="-I/usr/include/hdf5/serial"
+export CGO_LDFLAGS="-L/usr/lib/x86_64-linux-gnu/hdf5/serial -lhdf5"
+```
+
+**HDF5 headers not found on macOS** — run:
+```bash
+brew install hdf5
 export HDF5_DIR=$(brew --prefix hdf5)
 export CGO_CFLAGS="-I${HDF5_DIR}/include"
 export CGO_LDFLAGS="-L${HDF5_DIR}/lib"
+```
+
+**`duplicate field full_scan_threshold` on startup** — remove the duplicate line from the config:
+```bash
+sed -i '/full_scan_threshold: 10000/d' configs/qdrant.yaml
+```
+
+**Go not found after install** — add it to your PATH:
+```bash
+echo 'export PATH="$PATH:/usr/local/go/bin"' >> ~/.bashrc
+source ~/.bashrc
 ```
