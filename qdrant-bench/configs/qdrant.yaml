@@ -1,0 +1,68 @@
+# Qdrant production configuration mounted into every node.
+#
+# The values exposed here are the ones we sweep in the experiments. Anything
+# left blank/null means "use the Qdrant default" - see the documentation at
+# https://qdrant.tech/documentation/operations/configuration/ for the full
+# meaning of each field.
+#
+# IMPORTANT: per the proposal, max_segment_size_kb is the knob we wiggle to
+# study the impact of background segment compaction on read tail latency.
+# We override it from the harness via the per-collection optimizer_config
+# (passed at create_collection time) rather than editing this file - that
+# way each experiment run can pick its own value without restarting nodes.
+
+log_level: INFO
+
+storage:
+  # Where the WAL, segments, and snapshots live inside the container.
+  storage_path: /qdrant/storage
+  snapshots_path: /qdrant/snapshots
+
+  # Keep payload in RAM when small (default). Disabling this is useful only for
+  # very payload-heavy collections, which SIFT is not.
+  on_disk_payload: false
+
+  # Default optimizer settings. These are the FALLBACK; per-collection
+  # optimizer_config from the harness OVERRIDES these values, so editing here
+  # only affects collections we forgot to tune.
+  optimizers:
+    deleted_threshold: 0.2
+    vacuum_min_vector_number: 1000
+    # 0 = let Qdrant pick a number based on CPU count. The harness can override
+    # to a fixed value to make the experiment more reproducible.
+    default_segment_number: 0
+    # The compaction-impact knob: null = automatic. Sweep values from the
+    # harness: 10000 (force frequent compaction), 50000, 200000, null.
+    max_segment_size_kb: null
+    # Vectors stay as plain index (no HNSW) until a segment exceeds this size.
+    indexing_threshold_kb: 20000
+    flush_interval_sec: 5
+    max_optimization_threads: null
+
+  # HNSW defaults - per-collection override sets the actual values used.
+  hnsw_index:
+    m: 16
+    ef_construct: 100
+    full_scan_threshold: 10000
+    max_indexing_threads: 0
+    on_disk: false
+
+service:
+  # Allow CORS so the dashboard at :6333/dashboard works in a browser.
+  enable_cors: true
+  http_port: 6333
+  grpc_port: 6334
+  # Don't enforce a token; this is a benchmark cluster on a private network.
+  api_key: null
+
+cluster:
+  enabled: true
+  # P2P port the harness shouldn't talk to. Clients use grpc_port (6334) only.
+  p2p:
+    port: 6335
+  # Raft consensus tick - leave at default. Faster ticks reduce leader-election
+  # time but generate more chatter; if your numbers come out very high in the
+  # chaos experiments and you want to investigate, try 100 here (default 250ms)
+  # but report both numbers.
+  consensus:
+    tick_period_ms: 100

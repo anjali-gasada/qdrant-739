@@ -1,0 +1,122 @@
+# 3-node Qdrant cluster with Raft consensus enabled.
+#
+# Topology:
+#   node1 = bootstrap node (the rest join via --bootstrap http://node1:6335)
+#   node2, node3 = peer nodes
+#
+# Ports per node (host-side):
+#   633{3,4,5} for node1, 634{3,4,5} for node2, 635{3,4,5} for node3
+#   x33 = REST API, x34 = gRPC API, x35 = Raft / inter-node P2P
+#
+# Storage and snapshot dirs are bind-mounted so they survive container kills,
+# which is critical for the chaos experiments where we restart a killed node
+# and want it to rejoin the cluster (rather than appear as a brand-new peer).
+
+services:
+  qdrant_node1:
+    image: qdrant/qdrant:v1.15.5
+    container_name: qdrant_node1
+    hostname: qdrant_node1
+    restart: "no"   # do NOT auto-restart - chaos experiments rely on us
+                    # controlling restart timing manually
+    ports:
+      - "6333:6333"   # REST
+      - "6334:6334"   # gRPC
+      - "6335:6335"   # Raft P2P
+    volumes:
+      - ./data/node1:/qdrant/storage
+      - ./snapshots/node1:/qdrant/snapshots
+      - ../configs/qdrant.yaml:/qdrant/config/production.yaml:ro
+    environment:
+      QDRANT__CLUSTER__ENABLED: "true"
+      QDRANT__LOG_LEVEL: "INFO"
+      QDRANT__SERVICE__GRPC_PORT: "6334"
+    command: ["./qdrant", "--uri", "http://qdrant_node1:6335"]
+    networks:
+      qdrant_net:
+        ipv4_address: 172.30.0.11
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c ':> /dev/tcp/127.0.0.1/6333' || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+
+  qdrant_node2:
+    image: qdrant/qdrant:v1.15.5
+    container_name: qdrant_node2
+    hostname: qdrant_node2
+    restart: "no"
+    depends_on:
+      qdrant_node1:
+        condition: service_healthy
+    ports:
+      - "6433:6333"
+      - "6434:6334"
+      - "6435:6335"
+    volumes:
+      - ./data/node2:/qdrant/storage
+      - ./snapshots/node2:/qdrant/snapshots
+      - ../configs/qdrant.yaml:/qdrant/config/production.yaml:ro
+    environment:
+      QDRANT__CLUSTER__ENABLED: "true"
+      QDRANT__LOG_LEVEL: "INFO"
+      QDRANT__SERVICE__GRPC_PORT: "6334"
+    command:
+      - "./qdrant"
+      - "--bootstrap"
+      - "http://qdrant_node1:6335"
+      - "--uri"
+      - "http://qdrant_node2:6335"
+    networks:
+      qdrant_net:
+        ipv4_address: 172.30.0.12
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c ':> /dev/tcp/127.0.0.1/6333' || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+
+  qdrant_node3:
+    image: qdrant/qdrant:v1.15.5
+    container_name: qdrant_node3
+    hostname: qdrant_node3
+    restart: "no"
+    depends_on:
+      qdrant_node1:
+        condition: service_healthy
+    ports:
+      - "6533:6333"
+      - "6534:6334"
+      - "6535:6335"
+    volumes:
+      - ./data/node3:/qdrant/storage
+      - ./snapshots/node3:/qdrant/snapshots
+      - ../configs/qdrant.yaml:/qdrant/config/production.yaml:ro
+    environment:
+      QDRANT__CLUSTER__ENABLED: "true"
+      QDRANT__LOG_LEVEL: "INFO"
+      QDRANT__SERVICE__GRPC_PORT: "6334"
+    command:
+      - "./qdrant"
+      - "--bootstrap"
+      - "http://qdrant_node1:6335"
+      - "--uri"
+      - "http://qdrant_node3:6335"
+    networks:
+      qdrant_net:
+        ipv4_address: 172.30.0.13
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c ':> /dev/tcp/127.0.0.1/6333' || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+
+networks:
+  qdrant_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16

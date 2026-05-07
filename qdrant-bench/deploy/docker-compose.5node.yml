@@ -1,0 +1,140 @@
+# 5-node Qdrant cluster - same pattern as the 3-node file, with two more peers.
+# Used for the cluster-size sensitivity experiments in the proposal.
+
+services:
+  qdrant_node1:
+    image: qdrant/qdrant:v1.15.5
+    container_name: qdrant_node1
+    hostname: qdrant_node1
+    restart: "no"
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+      - "6335:6335"
+    volumes:
+      - ./data5/node1:/qdrant/storage
+      - ./snapshots5/node1:/qdrant/snapshots
+      - ../configs/qdrant.yaml:/qdrant/config/production.yaml:ro
+    environment:
+      QDRANT__CLUSTER__ENABLED: "true"
+      QDRANT__LOG_LEVEL: "INFO"
+      QDRANT__SERVICE__GRPC_PORT: "6334"
+    command: ["./qdrant", "--uri", "http://qdrant_node1:6335"]
+    networks:
+      qdrant_net:
+        ipv4_address: 172.31.0.11
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c ':> /dev/tcp/127.0.0.1/6333' || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+
+  qdrant_node2: &peer
+    image: qdrant/qdrant:v1.15.5
+    container_name: qdrant_node2
+    hostname: qdrant_node2
+    restart: "no"
+    depends_on:
+      qdrant_node1:
+        condition: service_healthy
+    ports:
+      - "6433:6333"
+      - "6434:6334"
+      - "6435:6335"
+    volumes:
+      - ./data5/node2:/qdrant/storage
+      - ./snapshots5/node2:/qdrant/snapshots
+      - ../configs/qdrant.yaml:/qdrant/config/production.yaml:ro
+    environment:
+      QDRANT__CLUSTER__ENABLED: "true"
+      QDRANT__LOG_LEVEL: "INFO"
+      QDRANT__SERVICE__GRPC_PORT: "6334"
+    command:
+      - "./qdrant"
+      - "--bootstrap"
+      - "http://qdrant_node1:6335"
+      - "--uri"
+      - "http://qdrant_node2:6335"
+    networks:
+      qdrant_net:
+        ipv4_address: 172.31.0.12
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c ':> /dev/tcp/127.0.0.1/6333' || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+
+  qdrant_node3:
+    <<: *peer
+    container_name: qdrant_node3
+    hostname: qdrant_node3
+    ports:
+      - "6533:6333"
+      - "6534:6334"
+      - "6535:6335"
+    volumes:
+      - ./data5/node3:/qdrant/storage
+      - ./snapshots5/node3:/qdrant/snapshots
+      - ../configs/qdrant.yaml:/qdrant/config/production.yaml:ro
+    command:
+      - "./qdrant"
+      - "--bootstrap"
+      - "http://qdrant_node1:6335"
+      - "--uri"
+      - "http://qdrant_node3:6335"
+    networks:
+      qdrant_net:
+        ipv4_address: 172.31.0.13
+
+  qdrant_node4:
+    <<: *peer
+    container_name: qdrant_node4
+    hostname: qdrant_node4
+    ports:
+      - "6633:6333"
+      - "6634:6334"
+      - "6635:6335"
+    volumes:
+      - ./data5/node4:/qdrant/storage
+      - ./snapshots5/node4:/qdrant/snapshots
+      - ../configs/qdrant.yaml:/qdrant/config/production.yaml:ro
+    command:
+      - "./qdrant"
+      - "--bootstrap"
+      - "http://qdrant_node1:6335"
+      - "--uri"
+      - "http://qdrant_node4:6335"
+    networks:
+      qdrant_net:
+        ipv4_address: 172.31.0.14
+
+  qdrant_node5:
+    <<: *peer
+    container_name: qdrant_node5
+    hostname: qdrant_node5
+    ports:
+      - "6733:6333"
+      - "6734:6334"
+      - "6735:6335"
+    volumes:
+      - ./data5/node5:/qdrant/storage
+      - ./snapshots5/node5:/qdrant/snapshots
+      - ../configs/qdrant.yaml:/qdrant/config/production.yaml:ro
+    command:
+      - "./qdrant"
+      - "--bootstrap"
+      - "http://qdrant_node1:6335"
+      - "--uri"
+      - "http://qdrant_node5:6335"
+    networks:
+      qdrant_net:
+        ipv4_address: 172.31.0.15
+
+networks:
+  qdrant_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.31.0.0/16
