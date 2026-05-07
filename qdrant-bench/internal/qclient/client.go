@@ -21,9 +21,12 @@ import (
 	"errors"
 	"fmt"
 	"sync/atomic"
-	"time"
+
 
 	"github.com/qdrant/go-client/qdrant"
+	"google.golang.org/grpc"
+    "google.golang.org/grpc/keepalive"
+    "time"
 )
 
 // Config configures a multi-node Qdrant client.
@@ -78,11 +81,15 @@ func New(cfg Config) (*Client, error) {
 		}
 		c, err := qdrant.NewClient(&qdrant.Config{
 			Host:             h,
-			Port:             port,
+			Port: 			  int(port), 
 			APIKey:           cfg.APIKey,
 			UseTLS:           cfg.UseTLS,
-			KeepAliveTime:    cfg.GRPCKeepAlive,
-			KeepAliveTimeout: cfg.GRPCKeepAliveTout,
+			GrpcOptions: []grpc.DialOption{
+				grpc.WithKeepaliveParams(keepalive.ClientParameters{
+					Time:    10 * time.Second,
+					Timeout: 5 * time.Second,
+				}),
+			},
 		})
 		if err != nil {
 			return nil, fmt.Errorf("qclient: dial %s: %w", host, err)

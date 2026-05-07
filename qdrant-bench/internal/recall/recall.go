@@ -17,8 +17,8 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/sai/qdrant-bench/internal/dataset"
-	"github.com/sai/qdrant-bench/internal/qclient"
+	"qdrant-bench/internal/dataset"
+	"qdrant-bench/internal/qclient"
 )
 
 // Result summarizes a recall sweep across the test split.

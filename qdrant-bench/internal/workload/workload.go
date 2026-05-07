@@ -29,8 +29,8 @@ import (
 	"time"
 
 	"github.com/qdrant/go-client/qdrant"
-	"github.com/sai/qdrant-bench/internal/dataset"
-	"github.com/sai/qdrant-bench/internal/qclient"
+	"qdrant-bench/internal/dataset"
+	"qdrant-bench/internal/qclient"
 )
 
 // OpKind tags one operation issued by a worker. Used by the metrics layer to

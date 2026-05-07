@@ -22,9 +22,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/sai/qdrant-bench/internal/dataset"
-	"github.com/sai/qdrant-bench/internal/qclient"
-	"github.com/sai/qdrant-bench/internal/recall"
+	"qdrant-bench/internal/dataset"
+	"qdrant-bench/internal/qclient"
+	"qdrant-bench/internal/recall"
 )
 
 func main() {

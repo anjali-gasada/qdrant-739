@@ -30,11 +30,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/sai/qdrant-bench/internal/dataset"
-	"github.com/sai/qdrant-bench/internal/metrics"
-	"github.com/sai/qdrant-bench/internal/qclient"
-	"github.com/sai/qdrant-bench/internal/recall"
-	"github.com/sai/qdrant-bench/internal/workload"
+	"qdrant-bench/internal/dataset"
+	"qdrant-bench/internal/metrics"
+	"qdrant-bench/internal/qclient"
+	"qdrant-bench/internal/recall"
+	"qdrant-bench/internal/workload"
 )
 
 // commaList splits a "x,y,z" string into a []string, trimming whitespace.

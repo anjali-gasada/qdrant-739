@@ -34,8 +34,8 @@ import (
 
 	"github.com/qdrant/go-client/qdrant"
 
-	"github.com/sai/qdrant-bench/internal/dataset"
-	"github.com/sai/qdrant-bench/internal/qclient"
+	"qdrant-bench/internal/dataset"
+	"qdrant-bench/internal/qclient"
 )
 
 func main() {

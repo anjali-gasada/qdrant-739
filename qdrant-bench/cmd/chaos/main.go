@@ -40,11 +40,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/sai/qdrant-bench/internal/chaos"
-	"github.com/sai/qdrant-bench/internal/dataset"
-	"github.com/sai/qdrant-bench/internal/metrics"
-	"github.com/sai/qdrant-bench/internal/qclient"
-	"github.com/sai/qdrant-bench/internal/workload"
+	"qdrant-bench/internal/chaos"
+	"qdrant-bench/internal/dataset"
+	"qdrant-bench/internal/metrics"
+	"qdrant-bench/internal/qclient"
+	"qdrant-bench/internal/workload"
 )
 
 func splitCSV(s string) []string {
