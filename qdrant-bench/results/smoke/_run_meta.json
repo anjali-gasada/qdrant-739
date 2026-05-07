@@ -1,0 +1,21 @@
+{
+  "batches": [
+    1
+  ],
+  "collection": "smoketest",
+  "concurrency": [
+    10
+  ],
+  "duration": "30s",
+  "hosts": [
+    "localhost:6334",
+    "localhost:6434",
+    "localhost:6534"
+  ],
+  "k": 10,
+  "wait": false,
+  "warmup": "5s",
+  "workloads": [
+    "C"
+  ]
+}

@@ -1,0 +1,310 @@
+[
+  {
+    "at": "2026-05-07T12:26:42.378655074-06:00",
+    "elapsed_ms": 472.921,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    }
+  },
+  {
+    "at": "2026-05-07T12:26:42.478905866-06:00",
+    "elapsed_ms": 573.172,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    }
+  },
+  {
+    "at": "2026-05-07T12:26:42.579312599-06:00",
+    "elapsed_ms": 673.578,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    }
+  },
+  {
+    "at": "2026-05-07T12:26:42.678673847-06:00",
+    "elapsed_ms": 772.94,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    }
+  },
+  {
+    "at": "2026-05-07T12:26:42.778936818-06:00",
+    "elapsed_ms": 873.203,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    }
+  },
+  {
+    "at": "2026-05-07T12:26:42.879173203-06:00",
+    "elapsed_ms": 973.439,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    }
+  },
+  {
+    "at": "2026-05-07T12:26:42.979518706-06:00",
+    "elapsed_ms": 1073.784,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    }
+  },
+  {
+    "at": "2026-05-07T12:26:43.07874678-06:00",
+    "elapsed_ms": 1173.012,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    }
+  },
+  {
+    "at": "2026-05-07T12:26:43.179598728-06:00",
+    "elapsed_ms": 1273.864,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    }
+  },
+  {
+    "at": "2026-05-07T12:26:43.278657284-06:00",
+    "elapsed_ms": 1372.923,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    }
+  },
+  {
+    "at": "2026-05-07T12:26:43.378756384-06:00",
+    "elapsed_ms": 1473.022,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    }
+  },
+  {
+    "at": "2026-05-07T12:26:43.478870813-06:00",
+    "elapsed_ms": 1573.137,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    }
+  },
+  {
+    "at": "2026-05-07T12:28:52.174298012-06:00",
+    "elapsed_ms": 0.08,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    },
+    "errors": {
+      "http://localhost:6433": "Get \"http://localhost:6433/cluster\": read tcp 127.0.0.1:51598-\u003e127.0.0.1:6433: read: connection reset by peer"
+    }
+  },
+  {
+    "at": "2026-05-07T12:28:52.275017823-06:00",
+    "elapsed_ms": 100.8,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    },
+    "errors": {
+      "http://localhost:6433": "Get \"http://localhost:6433/cluster\": read tcp 127.0.0.1:51604-\u003e127.0.0.1:6433: read: connection reset by peer"
+    }
+  },
+  {
+    "at": "2026-05-07T12:28:52.374353034-06:00",
+    "elapsed_ms": 200.135,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    },
+    "errors": {
+      "http://localhost:6433": "Get \"http://localhost:6433/cluster\": read tcp 127.0.0.1:51612-\u003e127.0.0.1:6433: read: connection reset by peer"
+    }
+  },
+  {
+    "at": "2026-05-07T12:28:52.474793242-06:00",
+    "elapsed_ms": 300.575,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    },
+    "errors": {
+      "http://localhost:6433": "Get \"http://localhost:6433/cluster\": read tcp 127.0.0.1:51622-\u003e127.0.0.1:6433: read: connection reset by peer"
+    }
+  },
+  {
+    "at": "2026-05-07T12:28:52.574974537-06:00",
+    "elapsed_ms": 400.757,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    },
+    "errors": {
+      "http://localhost:6433": "Get \"http://localhost:6433/cluster\": read tcp 127.0.0.1:51638-\u003e127.0.0.1:6433: read: connection reset by peer"
+    }
+  },
+  {
+    "at": "2026-05-07T12:28:52.675047137-06:00",
+    "elapsed_ms": 500.829,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    },
+    "errors": {
+      "http://localhost:6433": "Get \"http://localhost:6433/cluster\": read tcp 127.0.0.1:51654-\u003e127.0.0.1:6433: read: connection reset by peer"
+    }
+  },
+  {
+    "at": "2026-05-07T12:28:52.775257858-06:00",
+    "elapsed_ms": 601.04,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    },
+    "errors": {
+      "http://localhost:6433": "Get \"http://localhost:6433/cluster\": read tcp 127.0.0.1:42592-\u003e127.0.0.1:6433: read: connection reset by peer"
+    }
+  },
+  {
+    "at": "2026-05-07T12:28:52.874584506-06:00",
+    "elapsed_ms": 700.367,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    },
+    "errors": {
+      "http://localhost:6433": "Get \"http://localhost:6433/cluster\": read tcp 127.0.0.1:42606-\u003e127.0.0.1:6433: read: connection reset by peer"
+    }
+  },
+  {
+    "at": "2026-05-07T12:28:52.974885461-06:00",
+    "elapsed_ms": 800.668,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    },
+    "errors": {
+      "http://localhost:6433": "Get \"http://localhost:6433/cluster\": EOF"
+    }
+  },
+  {
+    "at": "2026-05-07T12:28:53.074941449-06:00",
+    "elapsed_ms": 900.724,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6533": 4
+    },
+    "errors": {
+      "http://localhost:6433": "Get \"http://localhost:6433/cluster\": read tcp 127.0.0.1:42622-\u003e127.0.0.1:6433: read: connection reset by peer"
+    }
+  },
+  {
+    "at": "2026-05-07T12:28:53.175215837-06:00",
+    "elapsed_ms": 1000.998,
+    "per_node": {
+      "http://localhost:6333": 7244277440943583,
+      "http://localhost:6433": 7244277440943583,
+      "http://localhost:6533": 7244277440943583
+    },
+    "term": {
+      "http://localhost:6333": 4,
+      "http://localhost:6433": 4,
+      "http://localhost:6533": 4
+    }
+  }
+]

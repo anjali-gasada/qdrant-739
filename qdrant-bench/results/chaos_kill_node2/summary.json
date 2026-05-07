@@ -1,0 +1,168 @@
+{
+  "concurrency": 25,
+  "duration": "3m0s",
+  "final_leader": 7244277440943583,
+  "inject_after": "1m10s",
+  "mode": "kill",
+  "post_state": {
+    "http://localhost:6333": {
+      "result": {
+        "status": "enabled",
+        "peer_id": 7244277440943583,
+        "peers": {
+          "1097875728971280": {
+            "uri": "http://qdrant_node3:6335/"
+          },
+          "2744096323719454": {
+            "uri": "http://qdrant_node2:6335/"
+          },
+          "7244277440943583": {
+            "uri": "http://qdrant_node1:6335/"
+          }
+        },
+        "raft_info": {
+          "term": 4,
+          "commit": 91,
+          "pending_operations": 0,
+          "leader": 7244277440943583,
+          "role": "Leader",
+          "is_voter": true
+        }
+      }
+    },
+    "http://localhost:6433": {
+      "result": {
+        "status": "enabled",
+        "peer_id": 2744096323719454,
+        "peers": {
+          "1097875728971280": {
+            "uri": "http://qdrant_node3:6335/"
+          },
+          "2744096323719454": {
+            "uri": "http://qdrant_node2:6335/"
+          },
+          "7244277440943583": {
+            "uri": "http://qdrant_node1:6335/"
+          }
+        },
+        "raft_info": {
+          "term": 4,
+          "commit": 91,
+          "pending_operations": 0,
+          "leader": 7244277440943583,
+          "role": "Follower",
+          "is_voter": true
+        }
+      }
+    },
+    "http://localhost:6533": {
+      "result": {
+        "status": "enabled",
+        "peer_id": 1097875728971280,
+        "peers": {
+          "1097875728971280": {
+            "uri": "http://qdrant_node3:6335/"
+          },
+          "2744096323719454": {
+            "uri": "http://qdrant_node2:6335/"
+          },
+          "7244277440943583": {
+            "uri": "http://qdrant_node1:6335/"
+          }
+        },
+        "raft_info": {
+          "term": 4,
+          "commit": 91,
+          "pending_operations": 0,
+          "leader": 7244277440943583,
+          "role": "Follower",
+          "is_voter": true
+        }
+      }
+    }
+  },
+  "pre_state": {
+    "http://localhost:6333": {
+      "result": {
+        "status": "enabled",
+        "peer_id": 7244277440943583,
+        "peers": {
+          "1097875728971280": {
+            "uri": "http://qdrant_node3:6335/"
+          },
+          "2744096323719454": {
+            "uri": "http://qdrant_node2:6335/"
+          },
+          "7244277440943583": {
+            "uri": "http://qdrant_node1:6335/"
+          }
+        },
+        "raft_info": {
+          "term": 4,
+          "commit": 86,
+          "pending_operations": 0,
+          "leader": 7244277440943583,
+          "role": "Leader",
+          "is_voter": true
+        }
+      }
+    },
+    "http://localhost:6433": {
+      "result": {
+        "status": "enabled",
+        "peer_id": 2744096323719454,
+        "peers": {
+          "1097875728971280": {
+            "uri": "http://qdrant_node3:6335/"
+          },
+          "2744096323719454": {
+            "uri": "http://qdrant_node2:6335/"
+          },
+          "7244277440943583": {
+            "uri": "http://qdrant_node1:6335/"
+          }
+        },
+        "raft_info": {
+          "term": 4,
+          "commit": 86,
+          "pending_operations": 0,
+          "leader": 7244277440943583,
+          "role": "Follower",
+          "is_voter": true
+        }
+      }
+    },
+    "http://localhost:6533": {
+      "result": {
+        "status": "enabled",
+        "peer_id": 1097875728971280,
+        "peers": {
+          "1097875728971280": {
+            "uri": "http://qdrant_node3:6335/"
+          },
+          "2744096323719454": {
+            "uri": "http://qdrant_node2:6335/"
+          },
+          "7244277440943583": {
+            "uri": "http://qdrant_node1:6335/"
+          }
+        },
+        "raft_info": {
+          "term": 4,
+          "commit": 86,
+          "pending_operations": 0,
+          "leader": 7244277440943583,
+          "role": "Follower",
+          "is_voter": true
+        }
+      }
+    }
+  },
+  "recover_after": "2m10s",
+  "recovery_elapsed": "1.573136822s",
+  "recovery_ms": 1573.136,
+  "target": "qdrant_node2",
+  "target_rest": "http://localhost:6433",
+  "total_ops": 47491,
+  "workload": "A_50r_50u"
+}

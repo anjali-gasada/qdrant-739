@@ -1,0 +1,21 @@
+{
+  "batches": [
+    1
+  ],
+  "collection": "sift1m",
+  "concurrency": [
+    25
+  ],
+  "duration": "1m0s",
+  "hosts": [
+    "localhost:6334",
+    "localhost:6434",
+    "localhost:6534"
+  ],
+  "k": 10,
+  "wait": true,
+  "warmup": "5s",
+  "workloads": [
+    "A"
+  ]
+}

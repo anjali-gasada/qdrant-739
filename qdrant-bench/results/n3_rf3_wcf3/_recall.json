@@ -1,0 +1,7 @@
+{
+  "k": 10,
+  "queries": 10000,
+  "mean_recall": 0.9987399999999977,
+  "min_recall": 0.6,
+  "zero_recall_count": 0
+}

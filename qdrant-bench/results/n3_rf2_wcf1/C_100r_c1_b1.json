@@ -1,0 +1,110 @@
+[
+  {
+    "operation": "read",
+    "concurrency": 1,
+    "started_at": "2026-05-07T12:24:23.537848957-06:00",
+    "duration_sec": 10.001303261,
+    "total_count": 2067,
+    "error_count": 1,
+    "qps": 206.67306510544975,
+    "mean_ms": 4.8312656023222065,
+    "p50_ms": 4.403,
+    "p90_ms": 6.627,
+    "p95_ms": 6.991,
+    "p99_ms": 7.651,
+    "p999_ms": 8.131,
+    "max_ms": 8.495,
+    "per_second": [
+      {
+        "second": 0,
+        "count": 203,
+        "errors": 0,
+        "p50_ms": 4.367,
+        "p95_ms": 7.051,
+        "p99_ms": 7.671
+      },
+      {
+        "second": 1,
+        "count": 205,
+        "errors": 0,
+        "p50_ms": 4.479,
+        "p95_ms": 6.895,
+        "p99_ms": 7.351
+      },
+      {
+        "second": 2,
+        "count": 200,
+        "errors": 0,
+        "p50_ms": 4.507,
+        "p95_ms": 7.075,
+        "p99_ms": 7.659
+      },
+      {
+        "second": 3,
+        "count": 214,
+        "errors": 0,
+        "p50_ms": 4.215,
+        "p95_ms": 6.731,
+        "p99_ms": 7.415
+      },
+      {
+        "second": 4,
+        "count": 224,
+        "errors": 0,
+        "p50_ms": 4.025,
+        "p95_ms": 6.471,
+        "p99_ms": 7.035
+      },
+      {
+        "second": 5,
+        "count": 198,
+        "errors": 0,
+        "p50_ms": 4.535,
+        "p95_ms": 7.015,
+        "p99_ms": 7.755
+      },
+      {
+        "second": 6,
+        "count": 201,
+        "errors": 0,
+        "p50_ms": 4.551,
+        "p95_ms": 6.983,
+        "p99_ms": 7.419
+      },
+      {
+        "second": 7,
+        "count": 201,
+        "errors": 0,
+        "p50_ms": 4.443,
+        "p95_ms": 7.311,
+        "p99_ms": 7.623
+      },
+      {
+        "second": 8,
+        "count": 206,
+        "errors": 0,
+        "p50_ms": 4.411,
+        "p95_ms": 7.143,
+        "p99_ms": 7.575
+      },
+      {
+        "second": 9,
+        "count": 214,
+        "errors": 0,
+        "p50_ms": 4.263,
+        "p95_ms": 6.803,
+        "p99_ms": 7.727
+      },
+      {
+        "second": 10,
+        "count": 1,
+        "errors": 1,
+        "p50_ms": 1.314,
+        "p95_ms": 1.314,
+        "p99_ms": 1.314
+      }
+    ],
+    "workload_label": "C_100r",
+    "config_label": "c=1_b=1_wait=false"
+  }
+]
